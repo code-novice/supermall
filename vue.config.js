@@ -11,5 +11,5 @@ module.exports = {
     },
   },
   //关闭或开启ESlink
-  lintOnSave: true
+  lintOnSave: false
 }
