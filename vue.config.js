@@ -11,5 +11,9 @@ module.exports = {
     },
   },
   //关闭或开启ESlink
-  lintOnSave: false
+  lintOnSave: false,
+  devServer: {
+      disableHostCheck: true
+    }
+
 }

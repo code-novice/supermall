@@ -52,6 +52,7 @@
         banners:[],
         isShow:false,
         recommends: [],
+        itemImgListener: null,
         goods:{
           'pop': {page:0, list: []},
           'new': {page:0, list: []},
@@ -76,25 +77,27 @@
     mounted(){
 
 
-      const refresh = debounce(this.$refs.scroll.refresh,200)
+      const refresh = debounce(this.$refs.scroll.refresh,100)
       //3.监听item中图片加载完成
-      this.$bus.$on('itemImageLoad', () =>{
+      this.itemImgListener = () =>{
         //刷新scroll高度
         // this.$refs.scroll.scroll.refresh()
         // this.$refs.scroll.refresh()
         //防抖动节流
         refresh()
-      })
+      }
+      this.$bus.$on('homeItemImageLoad', this.itemImgListener)
     },
 
     activated() {
-      console.log('activated');
       this.$refs.scroll.scroll.scrollTo(0,this.saveY)
       this.$refs.scroll.refresh()
     },
     deactivated() {
-      console.log('deactivated');
       this.saveY = this.$refs.scroll.scroll.y
+
+      //取消事件总线的事件
+      this.$bus.$off('homeItemImageLoad', this.itemImgListener)
     },
     methods: {
       //网络请求相关方法
